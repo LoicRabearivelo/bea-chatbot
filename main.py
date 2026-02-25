@@ -66,14 +66,22 @@ professionnels de santé du 974) grâce à l'outil `chercher_ressources_locales`
 un professionnel, portage en maillé, soutien familial…).
 
 ### Recommandation systématique — RÈGLE IMPÉRATIVE
-- Tu **DOIS** systématiquement recommander au moins une ressource humaine ou \
-structurelle issue de ta base de données à **chaque réponse**, sans exception.
-- Si la demande n'est pas précise, propose la ressource la plus pertinente \
-selon la localisation de l'utilisatrice.
-- Formule toujours ta recommandation ainsi : \
+- Tu **DOIS** systématiquement recommander au moins **une ressource humaine ou \
+structurelle** (professionnel, association, clinique…) à chaque réponse, sans exception.
+- Formule toujours ta recommandation professionnelle ainsi : \
 "Je t'oriente vers **[Nom de la ressource]** qui est **[Type de ressource]** à **[Ville]**."
+- En plus de cette orientation professionnelle, tu **DOIS également proposer \
+un contenu éducatif complémentaire** (Vidéo, Podcast ou Article) pour approfondir \
+le sujet abordé.
+- Présente les contenus éducatifs sous forme de **liste à puces claire** avec \
+les émojis appropriés et les liens cliquables :
+  - 🎥 **[Titre de la vidéo]** — [Description courte] → [URL]
+  - 🎧 **[Titre du podcast]** — [Description courte] → [URL]
+  - 📖 **[Titre de l'article]** — [Description courte] → [URL]
+- Si la demande n'est pas précise, propose la ressource la plus pertinente \
+selon le stade périnatal et la localisation de l'utilisatrice.
 - Appuie-toi sur les résultats de `chercher_ressources_locales` pour choisir \
-la ressource la plus adaptée au contexte.
+les contenus les plus adaptés.
 
 ### Limites médicales — RÈGLES ABSOLUES
 1. **Tu n'es PAS médecin.** Ne pose jamais de diagnostic.
@@ -108,8 +116,13 @@ fœtaux…) :
 # 3. Classe principale PerinatalBot
 # ──────────────────────────────────────────────
 
-# Base étendue de 20 ressources locales fictives mais réalistes
+# Base complète : 20 ressources physiques + 20 ressources multimédia
 _MOCK_RESSOURCES: list[dict[str, Any]] = [
+
+    # ════════════════════════════════════════════════════════════════════════
+    # RESSOURCES PHYSIQUES / HUMAINES (20 entrées)
+    # ════════════════════════════════════════════════════════════════════════
+
     # ── Sages-femmes libérales ──────────────────────────────────────────────
     {
         "nom": "Sage-femme — Céline Hoarau",
@@ -350,17 +363,295 @@ _MOCK_RESSOURCES: list[dict[str, Any]] = [
             "complet des ressources 974 disponible sur demande."
         ),
     },
+
+    # ════════════════════════════════════════════════════════════════════════
+    # RESSOURCES MULTIMÉDIA (20 entrées : Vidéos, Podcasts, Articles)
+    # ════════════════════════════════════════════════════════════════════════
+
+    # ── Vidéos ──────────────────────────────────────────────────────────────
+    {
+        "nom": "Comment donner le bain à votre nouveau-né",
+        "type": "Vidéo",
+        "thematique": "Bain bébé",
+        "url": "https://www.youtube.com/watch?v=dGzBGpfCHJA",
+        "duree": "8 min",
+        "description": (
+            "Tutoriel pas-à-pas pour réaliser le premier bain du nouveau-né en toute sécurité : "
+            "température de l'eau, maintien, produits adaptés, et conseils pour rassurer bébé."
+        ),
+    },
+    {
+        "nom": "Yoga prénatal — Séance complète 1er trimestre",
+        "type": "Vidéo",
+        "thematique": "Yoga prénatal",
+        "url": "https://www.youtube.com/watch?v=K9bRR3n7Kb8",
+        "duree": "30 min",
+        "description": (
+            "Séance de yoga doux adaptée au 1er trimestre de grossesse : postures pour "
+            "soulager les nausées, renforcer le plancher pelvien et favoriser la détente."
+        ),
+    },
+    {
+        "nom": "Yoga prénatal — Soulager les douleurs du dos (T2/T3)",
+        "type": "Vidéo",
+        "thematique": "Yoga prénatal",
+        "url": "https://www.youtube.com/watch?v=MFPnX7p7ZoQ",
+        "duree": "25 min",
+        "description": (
+            "Exercices ciblés pour les lombalgies et la sciatique du 2e et 3e trimestre. "
+            "Étirements doux, postures sur ballon et respiration profonde."
+        ),
+    },
+    {
+        "nom": "Allaitement maternel — Les bonnes positions",
+        "type": "Vidéo",
+        "thematique": "Allaitement",
+        "url": "https://www.youtube.com/watch?v=wjt2bYoOFhU",
+        "duree": "12 min",
+        "description": (
+            "Démonstration des positions clés pour allaiter confortablement : madone, "
+            "madone inversée, ballon de rugby, allongée. Conseils pour une bonne prise du sein."
+        ),
+    },
+    {
+        "nom": "Massage bébé — Technique douce pour les coliques",
+        "type": "Vidéo",
+        "thematique": "Massage bébé",
+        "url": "https://www.youtube.com/watch?v=VxP7vHDsiFo",
+        "duree": "10 min",
+        "description": (
+            "Vidéo de démonstration des mouvements de massage abdominal pour soulager "
+            "les coliques du nourrisson : technique des aiguilles d'horloge, retournement "
+            "des jambes et posture grenouille."
+        ),
+    },
+    {
+        "nom": "Exercices de rééducation périnéale à domicile",
+        "type": "Vidéo",
+        "thematique": "Post-partum",
+        "url": "https://www.youtube.com/watch?v=tR4TZ2kd9nA",
+        "duree": "20 min",
+        "description": (
+            "Programme de rééducation périnéale pour le post-partum : exercices de Kegel, "
+            "hypopressifs et gainage doux. À pratiquer après validation par votre sage-femme."
+        ),
+    },
+    {
+        "nom": "Le sommeil de bébé — Comprendre les cycles",
+        "type": "Vidéo",
+        "thematique": "Sommeil bébé",
+        "url": "https://www.youtube.com/watch?v=EzVJDg4HZPM",
+        "duree": "15 min",
+        "description": (
+            "Explication des cycles du sommeil du nourrisson de 0 à 6 mois, signes de fatigue "
+            "à repérer, rituels d'endormissement efficaces et conseils de cododo sécurisé."
+        ),
+    },
+    # ── Podcasts ─────────────────────────────────────────────────────────────
+    {
+        "nom": "Podcast — La Matrescence : devenir mère",
+        "type": "Podcast",
+        "thematique": "Post-partum / identité maternelle",
+        "url": "https://open.spotify.com/show/matrescence-podcast",
+        "duree": "Épisodes de 30 à 50 min",
+        "description": (
+            "Podcast francophone dédié à la transition identitaire de la maternité. "
+            "Témoignages, interviews de sages-femmes et psychologues, baby blues, "
+            "dépression post-partum et reconstruction de soi."
+        ),
+    },
+    {
+        "nom": "Podcast — Sage-femme & Bienveillance",
+        "type": "Podcast",
+        "thematique": "Grossesse / accouchement",
+        "url": "https://open.spotify.com/show/sagefemme-bienveillance",
+        "duree": "Épisodes de 20 à 45 min",
+        "description": (
+            "Podcast animé par des sages-femmes libérales : suivi de grossesse, préparation "
+            "à la naissance, accouchement physiologique, épisiotomie, césarienne. "
+            "Réponses aux questions des futures mamans."
+        ),
+    },
+    {
+        "nom": "Podcast — Allaiter, c'est possible !",
+        "type": "Podcast",
+        "thematique": "Allaitement",
+        "url": "https://open.spotify.com/show/allaiter-cest-possible",
+        "duree": "Épisodes de 25 à 40 min",
+        "description": (
+            "Conseils pratiques d'une consultante IBCLC : mise en route de l'allaitement, "
+            "engorgements, crevasses, allaitement mixte, reprise du travail et sevrage progressif."
+        ),
+    },
+    {
+        "nom": "Podcast — Mon Bébé Dort",
+        "type": "Podcast",
+        "thematique": "Sommeil bébé",
+        "url": "https://open.spotify.com/show/mon-bebe-dort",
+        "duree": "Épisodes de 15 à 30 min",
+        "description": (
+            "Conseils de puéricultrice sur le sommeil du nourrisson : cycles, régressions, "
+            "méthodes douces d'accompagnement au sommeil, cododo sécurisé et nuits des parents."
+        ),
+    },
+    {
+        "nom": "Podcast — Nutrition & Grossesse",
+        "type": "Podcast",
+        "thematique": "Nutrition prénatale",
+        "url": "https://open.spotify.com/show/nutrition-grossesse",
+        "duree": "Épisodes de 20 à 35 min",
+        "description": (
+            "Interviews de diététiciennes spécialisées en périnatalité : besoins nutritionnels "
+            "par trimestre, aliments à éviter, supplémentation en acide folique et fer, "
+            "gestion des nausées et des fringales."
+        ),
+    },
+    {
+        "nom": "Podcast — Papa aussi !",
+        "type": "Podcast",
+        "thematique": "Parentalité / partenaire",
+        "url": "https://open.spotify.com/show/papa-aussi-podcast",
+        "duree": "Épisodes de 25 à 40 min",
+        "description": (
+            "Podcast dédié aux pères et co-parents : congé paternité, place du papa "
+            "à l'accouchement, soutien à la maman allaitante, parentalité partagée "
+            "et gestion du manque de sommeil en couple."
+        ),
+    },
+    # ── Articles ─────────────────────────────────────────────────────────────
+    {
+        "nom": "Article — Le suivi de grossesse en France : calendrier et examens",
+        "type": "Article",
+        "thematique": "Suivi grossesse",
+        "url": "https://www.ameli.fr/assure/sante/themes/grossesse/suivi-de-grossesse",
+        "lecture_estimee": "5 min",
+        "description": (
+            "Guide officiel Ameli sur le suivi de grossesse : calendrier des consultations "
+            "obligatoires, examens biologiques et échographies recommandés, "
+            "déclaration de grossesse et droits à la Sécurité Sociale."
+        ),
+    },
+    {
+        "nom": "Article — Alimentation de la femme enceinte",
+        "type": "Article",
+        "thematique": "Nutrition prénatale",
+        "url": "https://www.ameli.fr/assure/sante/themes/grossesse/alimentation-femme-enceinte",
+        "lecture_estimee": "7 min",
+        "description": (
+            "Recommandations officielles d'Ameli sur la nutrition pendant la grossesse : "
+            "aliments à favoriser, à éviter (toxoplasmose, listériose), "
+            "suppléments vitamines et minéraux essentiels."
+        ),
+    },
+    {
+        "nom": "Article — Comprendre et gérer le baby blues",
+        "type": "Article",
+        "thematique": "Post-partum / santé mentale",
+        "url": "https://www.ameli.fr/assure/sante/themes/grossesse/post-partum-baby-blues",
+        "lecture_estimee": "6 min",
+        "description": (
+            "Article Ameli sur le baby blues et la dépression post-partum : symptômes, "
+            "différences entre les deux, quand consulter, ressources de soutien "
+            "et accompagnement psychologique disponible."
+        ),
+    },
+    {
+        "nom": "Article — Bien dormir pendant la grossesse",
+        "type": "Article",
+        "thematique": "Sommeil grossesse",
+        "url": "https://www.mpedia.fr/art-bien-dormir-pendant-grossesse/",
+        "lecture_estimee": "5 min",
+        "description": (
+            "Conseils Mpedia pour améliorer la qualité du sommeil durant la grossesse : "
+            "position idéale (décubitus latéral gauche), oreillers de soutien, "
+            "gestion des réveils nocturnes et des jambes lourdes."
+        ),
+    },
+    {
+        "nom": "Article — Le bain du nourrisson : conseils pratiques",
+        "type": "Article",
+        "thematique": "Bain bébé",
+        "url": "https://www.mpedia.fr/art-bain-nourrisson/",
+        "lecture_estimee": "4 min",
+        "description": (
+            "Guide Mpedia pour donner le bain au nourrisson : fréquence recommandée, "
+            "température de l'eau (37°C), matériel nécessaire, soins du cordon "
+            "ombilical et produits adaptés à la peau sensible du bébé."
+        ),
+    },
+    {
+        "nom": "Article — Introduction à la diversification alimentaire",
+        "type": "Article",
+        "thematique": "Nutrition bébé",
+        "url": "https://www.mpedia.fr/art-diversification-alimentaire/",
+        "lecture_estimee": "8 min",
+        "description": (
+            "Article Mpedia sur la diversification alimentaire : à partir de quel âge, "
+            "ordre d'introduction des aliments, diversification menée par le bébé (DME), "
+            "aliments à risque allergène et signes d'intolérance à surveiller."
+        ),
+    },
+    {
+        "nom": "Article — Sport et activité physique pendant la grossesse",
+        "type": "Article",
+        "thematique": "Exercice prénatal",
+        "url": "https://www.ameli.fr/assure/sante/themes/grossesse/activite-physique-grossesse",
+        "lecture_estimee": "6 min",
+        "description": (
+            "Recommandations Ameli sur l'activité physique pendant la grossesse : "
+            "sports autorisés et contre-indiqués, bénéfices de la marche et de la natation, "
+            "précautions à partir du 3e trimestre et signaux d'alerte."
+        ),
+    },
+    {
+        "nom": "Article — Portage physiologique : guide pour débutantes",
+        "type": "Article",
+        "thematique": "Portage",
+        "url": "https://www.mpedia.fr/art-portage-physiologique-bebe/",
+        "lecture_estimee": "7 min",
+        "description": (
+            "Guide Mpedia sur le portage physiologique : avantages pour le lien "
+            "d'attachement, position grenouille, critères d'un portage sécurisé (TICKS), "
+            "choix de l'écharpe ou du porte-bébé adapté à l'âge."
+        ),
+    },
 ]
+
+# ────────────────────────────────────────────────
+# Types de ressources multimédia pour filtrage rapide
+# ────────────────────────────────────────────────
+_MULTIMEDIA_TYPES: frozenset[str] = frozenset({"vidéo", "podcast", "article"})
 
 # Mots-clés signalant un besoin d'information, d'aide ou de suivi
 _INTENT_KEYWORDS: tuple[str, ...] = (
+    # Besoins généraux
     "aide", "besoin", "info", "comment", "où", "qui", "trouver", "cherche",
     "recommande", "conseil", "suivi", "douleur", "symptôme", "inquiète",
-    "peur", "problème", "allaitement", "grossesse", "accouchement", "bébé",
+    "peur", "problème",
+    # Thématiques périnatalité
+    "allaitement", "grossesse", "accouchement", "bébé", "nourrisson",
     "sage-femme", "médecin", "clinique", "hôpital", "ostéopathe", "doula",
     "portage", "post-partum", "nausée", "fatigue", "contractions", "mouvement",
     "pédiatre", "naissance", "préparation", "écharpe", "lactation", "colique",
     "réflux", "torticolis", "plagiocéphalie", "sevrage", "monitoring",
+    # Intentions multimédia
+    "regarder", "voir", "vidéo", "tutoriel", "tuto",
+    "écouter", "podcast", "audio", "émission",
+    "lire", "article", "guide", "lire", "documentation",
+    # Thématiques multimédia spécifiques
+    "yoga", "exercice", "sport", "bain", "sommeil", "nutrition", "alimentation",
+    "massage", "rééducation", "périnée", "diversification",
+)
+
+# Mots-clés spécifiques aux intentions multimédia
+_VIDEO_KEYWORDS: tuple[str, ...] = (
+    "regarder", "voir", "vidéo", "tutoriel", "tuto", "démonstration", "montrer",
+)
+_PODCAST_KEYWORDS: tuple[str, ...] = (
+    "écouter", "podcast", "audio", "émission", "épisode",
+)
+_ARTICLE_KEYWORDS: tuple[str, ...] = (
+    "lire", "article", "guide", "documentation", "texte", "site", "fiche",
 )
 
 
@@ -368,6 +659,9 @@ def _infer_resource_params(profile: UserProfile) -> tuple[str, str]:
     """
     Déduit le type de ressource et la localisation les plus pertinents
     d'après le message et le profil de l'utilisatrice.
+
+    Priorise les intentions multimédia (regarder/écouter/lire) si détectées,
+    puis les besoins professionnels spécifiques, puis le stade périnatal.
 
     Returns
     -------
@@ -395,7 +689,17 @@ def _infer_resource_params(profile: UserProfile) -> tuple[str, str]:
             localisation = val
             break
 
-    # Inférence du type selon les mots-clés du message
+    # ── Détection des intentions multimédia (priorité haute) ──
+    if any(w in msg for w in _VIDEO_KEYWORDS):
+        return "Vidéo", localisation
+
+    if any(w in msg for w in _PODCAST_KEYWORDS):
+        return "Podcast", localisation
+
+    if any(w in msg for w in _ARTICLE_KEYWORDS):
+        return "Article", localisation
+
+    # ── Détection par thématique (retourne le type professionnel le plus adapté) ──
     if any(w in msg for w in ("allaitement", "lait", "sein", "tétée", "lactation",
                                "crevasse", "engorgement")):
         return "Consultante en lactation", localisation
@@ -433,7 +737,17 @@ def _infer_resource_params(profile: UserProfile) -> tuple[str, str]:
     if any(w in msg for w in ("réseau", "coordination", "parcours", "repere")):
         return "Réseau de santé", localisation
 
-    # Fallback selon le stade périnatal
+    # ── Thématiques multimédia sans intention explicite ──
+    if any(w in msg for w in ("yoga", "exercice", "sport", "bain", "massage")):
+        return "Vidéo", localisation
+
+    if any(w in msg for w in ("sommeil", "nuit", "dodo", "endormissement")):
+        return "Podcast", localisation
+
+    if any(w in msg for w in ("nutrition", "alimentation", "manger", "diversification")):
+        return "Article", localisation
+
+    # ── Fallback selon le stade périnatal ──
     stade = profile.stade.lower()
     if stade in ("t1", "t2", "t3", "conception"):
         return "Sage-femme", localisation
@@ -474,11 +788,12 @@ class PerinatalBot:
                 "function": {
                     "name": "chercher_ressources_locales",
                     "description": (
-                        "Recherche des ressources locales (professionnels de santé, PMI, "
-                        "associations, hôpitaux, cliniques privées, ostéopathes, doulas, "
-                        "maisons de naissance) à La Réunion (974) selon un type de ressource "
-                        "et une localisation. Doit être appelé à chaque tour de conversation "
-                        "pour proposer systématiquement une recommandation pertinente."
+                        "Recherche des ressources à La Réunion (974) selon un type et une "
+                        "localisation. Couvre les ressources humaines/structurelles "
+                        "(professionnels de santé, associations, cliniques, hôpitaux…) "
+                        "ET les contenus éducatifs multimédia (Vidéo, Podcast, Article). "
+                        "Doit être appelé à chaque tour pour proposer une recommandation "
+                        "professionnelle ET un contenu éducatif complémentaire."
                     ),
                     "parameters": {
                         "type": "object",
@@ -486,13 +801,16 @@ class PerinatalBot:
                             "type_ressource": {
                                 "type": "string",
                                 "description": (
-                                    "Type de ressource recherchée : "
+                                    "Type de ressource recherchée. "
+                                    "Ressources humaines/structurelles : "
                                     "'PMI', 'Sage-femme', 'Hôpital', 'Association parentalité', "
                                     "'Association allaitement', 'Association portage', "
                                     "'Consultante en lactation', 'Réseau de santé', "
                                     "'Clinique privée', 'Pédiatre', 'Néonatologue', "
                                     "'Maison de naissance', \"Centre d'accouchement dans l'eau\", "
-                                    "'Ostéopathe pédiatrique', 'Doula', 'tous'"
+                                    "'Ostéopathe pédiatrique', 'Doula'. "
+                                    "Contenus multimédia : 'Vidéo', 'Podcast', 'Article'. "
+                                    "Pour tout : 'tous'."
                                 ),
                             },
                             "localisation": {
@@ -500,7 +818,17 @@ class PerinatalBot:
                                 "description": (
                                     "Commune ou zone de recherche à La Réunion "
                                     "(ex: 'Saint-Denis', 'Saint-Pierre', 'Saint-Paul', "
-                                    "'Saint-Leu', 'La Possession', '974')"
+                                    "'Saint-Leu', 'La Possession', '974'). "
+                                    "Non utilisé pour les ressources multimédia (accessibles partout)."
+                                ),
+                            },
+                            "thematique": {
+                                "type": "string",
+                                "description": (
+                                    "Thématique pour affiner la recherche multimédia "
+                                    "(ex: 'allaitement', 'sommeil bébé', 'yoga prénatal', "
+                                    "'bain bébé', 'nutrition', 'post-partum', 'portage'). "
+                                    "Optionnel, utilisé uniquement pour les types Vidéo/Podcast/Article."
                                 ),
                             },
                         },
@@ -516,16 +844,20 @@ class PerinatalBot:
     async def chercher_ressources_locales(
         type_ressource: str = "tous",
         localisation: str = "",
+        thematique: str = "",
     ) -> list[dict[str, Any]]:
         """
-        Interroge la base de ressources locales (mockup).
+        Interroge la base de ressources (mockup).
 
-        En production, cette méthode appellera une vraie BDD / API externe.
+        Supporte désormais les types 'Vidéo', 'Podcast' et 'Article' en plus
+        des ressources physiques/humaines. Le filtre par `thematique` est appliqué
+        uniquement aux ressources multimédia.
 
         Parameters
         ----------
-        type_ressource : filtre par type ou 'tous'.
-        localisation   : filtre optionnel par commune.
+        type_ressource : type de ressource ou 'tous'.
+        localisation   : filtre commune (ignoré pour les ressources multimédia).
+        thematique     : filtre thématique pour les ressources multimédia.
 
         Returns
         -------
@@ -534,20 +866,35 @@ class PerinatalBot:
         await asyncio.sleep(0.1)  # Simule une latence réseau
 
         resultats = list(_MOCK_RESSOURCES)
+        type_lower = type_ressource.lower()
+        is_multimedia_request = type_lower in _MULTIMEDIA_TYPES or type_lower == "tous"
 
-        # Filtre par type
-        if type_ressource.lower() != "tous":
+        # ── Filtre par type ──
+        if type_lower != "tous":
             resultats = [
                 r for r in resultats
-                if type_ressource.lower() in r["type"].lower()
+                if type_lower in r["type"].lower()
             ]
 
-        # Filtre par localisation (si aucun résultat localisé, on conserve tous)
-        if localisation:
+        # ── Filtre par thématique (multimédia uniquement) ──
+        if thematique and is_multimedia_request:
+            theme_lower = thematique.lower()
+            resultats_theme = [
+                r for r in resultats
+                if theme_lower in r.get("thematique", "").lower()
+                or theme_lower in r.get("description", "").lower()
+                or theme_lower in r.get("nom", "").lower()
+            ]
+            if resultats_theme:
+                resultats = resultats_theme
+
+        # ── Filtre par localisation (ressources humaines/physiques uniquement) ──
+        if localisation and type_lower not in _MULTIMEDIA_TYPES:
             loc = localisation.lower()
             resultats_loc = [
                 r for r in resultats
-                if loc in r["adresse"].lower() or loc in r.get("nom", "").lower()
+                if loc in r.get("adresse", "").lower()
+                or loc in r.get("nom", "").lower()
             ]
             if resultats_loc:
                 resultats = resultats_loc
@@ -571,10 +918,10 @@ class PerinatalBot:
         """
         Gère un tour de conversation complet :
         1. Construit le system prompt contextualisé.
-        2. Effectue une recherche proactive de ressources avant le premier appel LLM.
-        3. Injecte les ressources dans le contexte pour forcer une recommandation.
+        2. Recherche proactive : ressource professionnelle + contenu multimédia.
+        3. Injecte les deux types de ressources dans le contexte.
         4. Traite les tool_calls additionnels déclenchés par l'IA.
-        5. Retourne la réponse finale enrichie d'une recommandation locale.
+        5. Retourne la réponse finale avec recommandation pro + contenu éducatif.
 
         Parameters
         ----------
@@ -582,7 +929,7 @@ class PerinatalBot:
 
         Returns
         -------
-        Réponse textuelle du bot avec recommandation de ressource(s).
+        Réponse textuelle du bot.
         """
         system_msg = SYSTEM_PROMPT.format(
             age=profile.age,
@@ -595,39 +942,61 @@ class PerinatalBot:
             {"role": "user", "content": profile.message},
         ]
 
-        # ── Étape 1 : Recherche proactive dès le premier tour ────────────────
-        # On vérifie si le message contient un mot-clé pertinent.
-        # Par défaut (or True), la recherche est TOUJOURS déclenchée pour garantir
-        # la recommandation systématique définie dans le SYSTEM_PROMPT.
+        # ── Étape 1 : Double recherche proactive ────────────────────────────
+        # (a) Ressource professionnelle/structurelle adaptée au profil
+        # (b) Contenu multimédia complémentaire sur la même thématique
+        # La recherche est TOUJOURS déclenchée (or True) → recommandation systématique.
         msg_lower = profile.message.lower()
-        needs_lookup = any(kw in msg_lower for kw in _INTENT_KEYWORDS) or True
+        _ = any(kw in msg_lower for kw in _INTENT_KEYWORDS) or True  # always True
 
-        if needs_lookup:
-            type_ressource, localisation = _infer_resource_params(profile)
-            print(f"  🔍 Recherche proactive : type='{type_ressource}', loc='{localisation}'")
+        type_pro, localisation = _infer_resource_params(profile)
 
-            ressources = await self.chercher_ressources_locales(
-                type_ressource=type_ressource,
+        # Si l'inférence renvoie directement un type multimédia, on cherche aussi le pro
+        if type_pro in ("Vidéo", "Podcast", "Article"):
+            type_multimedia = type_pro
+            type_pro_fallback, _ = "Sage-femme", localisation  # pro par défaut
+        else:
+            type_multimedia = _pick_multimedia_type(profile.message)
+            type_pro_fallback = type_pro
+
+        print(f"  🔍 Recherche pro : type='{type_pro_fallback}', loc='{localisation}'")
+        print(f"  🎬 Recherche média : type='{type_multimedia}'")
+
+        # Recherches parallèles pour limiter la latence
+        ressources_pro, ressources_media = await asyncio.gather(
+            PerinatalBot.chercher_ressources_locales(
+                type_ressource=type_pro_fallback,
                 localisation=localisation,
-            )
+            ),
+            PerinatalBot.chercher_ressources_locales(
+                type_ressource=type_multimedia,
+                thematique=_infer_thematique(profile.message),
+            ),
+        )
 
-            ressources_json = json.dumps(ressources, ensure_ascii=False, indent=2)
+        pro_json = json.dumps(ressources_pro, ensure_ascii=False, indent=2)
+        media_json = json.dumps(ressources_media, ensure_ascii=False, indent=2)
 
-            # Injection des résultats dans le contexte comme message système additionnel
-            messages.append(
-                {
-                    "role": "system",
-                    "content": (
-                        f"### Ressources locales disponibles pour cette utilisatrice\n"
-                        f"Type recherché : **{type_ressource}** | "
-                        f"Localisation : **{localisation or 'La Réunion (974)'}**\n\n"
-                        f"```json\n{ressources_json}\n```\n\n"
-                        f"⚠️ INSTRUCTION IMPÉRATIVE : Tu DOIS intégrer au moins une de ces "
-                        f"ressources dans ta réponse en utilisant exactement cette formule : "
-                        f"\"Je t'oriente vers [Nom] qui est [Type] à [Ville].\" 🌺"
-                    ),
-                }
-            )
+        # Injection dans le contexte
+        messages.append(
+            {
+                "role": "system",
+                "content": (
+                    f"### Ressources professionnelles disponibles\n"
+                    f"Type : **{type_pro_fallback}** | "
+                    f"Localisation : **{localisation or 'La Réunion (974)'}**\n\n"
+                    f"```json\n{pro_json}\n```\n\n"
+                    f"### Contenus éducatifs complémentaires ({type_multimedia})\n"
+                    f"```json\n{media_json}\n```\n\n"
+                    f"⚠️ INSTRUCTIONS IMPÉRATIVES :\n"
+                    f"1. Présente au moins un professionnel avec : "
+                    f"\"Je t'oriente vers [Nom] qui est [Type] à [Ville].\"\n"
+                    f"2. Propose ensuite au moins un contenu éducatif en liste à puces "
+                    f"avec l'émoji approprié (🎥 vidéo, 🎧 podcast, 📖 article) "
+                    f"et le lien cliquable."
+                ),
+            }
+        )
 
         # ── Étape 2 : Premier appel à Mistral ───────────────────────────────
         response = await self.client.chat.complete_async(
@@ -678,6 +1047,64 @@ class PerinatalBot:
 
 
 # ──────────────────────────────────────────────
+# Fonctions utilitaires de sélection multimédia
+# ──────────────────────────────────────────────
+
+def _pick_multimedia_type(message: str) -> str:
+    """
+    Choisit le type de contenu multimédia le plus adapté au message.
+    Priorité : intention explicite → thématique → rotation par défaut.
+    """
+    msg = message.lower()
+
+    if any(w in msg for w in _VIDEO_KEYWORDS):
+        return "Vidéo"
+    if any(w in msg for w in _PODCAST_KEYWORDS):
+        return "Podcast"
+    if any(w in msg for w in _ARTICLE_KEYWORDS):
+        return "Article"
+
+    # Thématiques naturellement associées à un format
+    if any(w in msg for w in ("yoga", "exercice", "bain", "massage", "démonstration")):
+        return "Vidéo"
+    if any(w in msg for w in ("sommeil", "témoignage", "histoire", "parcours")):
+        return "Podcast"
+    if any(w in msg for w in ("nutrition", "alimentation", "droits", "calendrier")):
+        return "Article"
+
+    # Défaut : Vidéo (format le plus engageant)
+    return "Vidéo"
+
+
+def _infer_thematique(message: str) -> str:
+    """
+    Déduit la thématique du message pour affiner la recherche multimédia.
+    """
+    msg = message.lower()
+
+    thematique_map = {
+        "allaitement": ("allaitement", "lait", "sein", "tétée", "lactation",
+                        "crevasse", "engorgement"),
+        "sommeil bébé": ("sommeil", "nuit", "dodo", "endormissement", "réveil"),
+        "yoga prénatal": ("yoga", "exercice prénatal", "stretching"),
+        "bain bébé": ("bain", "baigner"),
+        "nutrition prénatale": ("nutrition", "alimentation grossesse", "manger enceinte",
+                                "nausée", "fringale"),
+        "post-partum": ("post-partum", "après accouchement", "baby blues",
+                        "dépression", "rééducation", "périnée"),
+        "portage": ("portage", "écharpe", "porte-bébé"),
+        "massage bébé": ("massage", "colique", "bien-être bébé"),
+        "nutrition bébé": ("diversification", "alimentation bébé", "purée"),
+    }
+
+    for thematique, keywords in thematique_map.items():
+        if any(kw in msg for kw in keywords):
+            return thematique
+
+    return ""
+
+
+# ──────────────────────────────────────────────
 # 4. Application FastAPI
 # ──────────────────────────────────────────────
 
@@ -689,15 +1116,15 @@ async def lifespan(application: FastAPI):
     """Initialise le PerinatalBot une seule fois au démarrage du serveur."""
     global bot
     bot = PerinatalBot()
-    print("✅ Ti'Konsey — PerinatalBot initialisé")
+    print("✅ Ti'Konsey — PerinatalBot initialisé (v3.0 multimédia)")
     yield
     bot = None
 
 
 app = FastAPI(
     title="Ti'Konsey API",
-    description="API d'accompagnement périnatal pour La Réunion (974)",
-    version="2.0.0",
+    description="API d'accompagnement périnatal pour La Réunion (974) — avec contenus multimédia",
+    version="3.0.0",
     lifespan=lifespan,
 )
 
@@ -717,8 +1144,10 @@ class ChatResponse(BaseModel):
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(profile: UserProfile) -> ChatResponse:
     """
-    Reçoit un profil utilisateur + message en JSON,
-    retourne la réponse de Béa avec une recommandation de ressource locale.
+    Reçoit un profil utilisateur + message en JSON.
+    Retourne la réponse de Béa avec :
+    - une recommandation de ressource professionnelle locale
+    - un contenu éducatif multimédia complémentaire (Vidéo, Podcast ou Article)
     """
     if bot is None:
         raise HTTPException(status_code=503, detail="Le bot n'est pas encore initialisé.")
